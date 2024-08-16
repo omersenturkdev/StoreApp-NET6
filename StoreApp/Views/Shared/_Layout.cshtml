@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Store App</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+
 </head>
 <body>
     <header>
-        Store App : Header
         <partial name="_Navbar"></partial>
     </header>
-    <main>
-        @RenderBody()
-    </main>
+    <div class="container-md">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
     <footer>
         Footer
     </footer>
-
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    @await RenderSectionAsync("Script", false)
 </body>
 </html>
