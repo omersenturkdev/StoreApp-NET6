@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace StoreApp.Models
+namespace Repositories
 {
     public class RepositoryContext : DbContext
     {

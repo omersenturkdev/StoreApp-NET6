@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using StoreApp.Models;
+using Repositories;
 
 #nullable disable
 
 namespace StoreApp.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20240815214554_init")]
+    [Migration("20240817135044_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace StoreApp.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
 
-            modelBuilder.Entity("StoreApp.Models.Product", b =>
+            modelBuilder.Entity("Entities.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,6 +33,26 @@ namespace StoreApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Price = 15000m,
+                            ProductName = "Computer"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Price = 9000m,
+                            ProductName = "Keyboard"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Price = 8000m,
+                            ProductName = "Mouse"
+                        });
                 });
 #pragma warning restore 612, 618
         }
