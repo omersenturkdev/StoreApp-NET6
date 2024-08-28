@@ -11,5 +11,7 @@ namespace Repositories.Contracts
     {
         IQueryable<Product> GetAllProduct(bool trackChanged);
         Product? GetOneProduct(int id, bool trackChanged);
+        void CreateProduct(Product product);
+        void DeleteOneProduct(Product prd);
     }
 }

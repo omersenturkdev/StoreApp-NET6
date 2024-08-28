@@ -20,5 +20,14 @@ namespace Repositories
         }
         public IQueryable<Product> GetAllProduct(bool trackChanged) => FindAll(trackChanged);
 
+        public void CreateProduct(Product product)
+        {
+            Create(product);
+        }
+
+        public void DeleteOneProduct(Product prd)
+        {
+            Remove(prd);
+        }
     }
 }
