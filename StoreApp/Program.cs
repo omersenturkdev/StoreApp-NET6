@@ -11,7 +11,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<RepositoryContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("sqlconnection"),
-        b=> b.MigrationsAssembly("StoreApp"));
+        b => b.MigrationsAssembly("StoreApp"));
 });
 
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
@@ -29,10 +29,19 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseHttpsRedirection();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"
-);
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapAreaControllerRoute(
+        name: "Admin",
+        areaName: "Admin",
+        pattern: "Admin/{controller=Dashboard}/{action=Index}/{id?}"
+    );
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
+});
+
 
 
 app.Run();
