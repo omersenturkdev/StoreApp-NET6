@@ -1,5 +1,7 @@
-﻿using Entities.Models;
+﻿using Entities.Dtos;
+using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Services.Contracts;
 
 namespace StoreApp.Areas.Admin.Controllers
@@ -17,29 +19,36 @@ namespace StoreApp.Areas.Admin.Controllers
             var model = _manager.ProductService.GetProducts(false);
             return View(model);
         }
+        private SelectList GetCategoriesSelectList()
+        {
+            return new SelectList(_manager.CategoryService.GetAllCategory(false), "CategoryId", "CategoryName", "1");
+        }
+
         public IActionResult Create()
         {
+            ViewBag.Categories = GetCategoriesSelectList();
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([FromForm] Product prd)
+        public IActionResult Create([FromForm] ProductDtoForInsertion prdDto)
         {
             if (ModelState.IsValid)
             {
-                _manager.ProductService.CreateProduct(prd);
+                _manager.ProductService.CreateProduct(prdDto);
                 return RedirectToAction("Index");
             }
             return View();
         }
         public IActionResult Update([FromRoute(Name = "id")] int id)
         {
-            var model = _manager.ProductService.GetOneProduct(id, false);
+            ViewBag.Categories = GetCategoriesSelectList();
+            var model = _manager.ProductService.GetOneProductForUpdate(id, false);
             return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Product prd)
+        public IActionResult Update([FromForm]ProductDtoForUpdate prd)
         {
             if (ModelState.IsValid)
             {
@@ -51,7 +60,7 @@ namespace StoreApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete([FromRoute(Name ="id")] int id)
+        public IActionResult Delete([FromRoute(Name = "id")] int id)
         {
             _manager.ProductService.DeleteOneProduct(id);
             return RedirectToAction("Index");

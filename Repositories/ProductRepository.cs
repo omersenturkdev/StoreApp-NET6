@@ -16,7 +16,7 @@ namespace Repositories
         }
         public Product? GetOneProduct(int id, bool trackChanges)
         {
-            return FindByCondition(p => p.Id.Equals(id), trackChanges);
+            return FindByCondition(p => p.ProductId.Equals(id), trackChanges);
         }
         public IQueryable<Product> GetAllProduct(bool trackChanged) => FindAll(trackChanged);
 
@@ -28,6 +28,11 @@ namespace Repositories
         public void DeleteOneProduct(Product prd)
         {
             Remove(prd);
+        }
+
+        public void UpdateOneProduct(Product entity)
+        {
+            Update(entity);
         }
     }
 }
