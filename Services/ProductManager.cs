@@ -63,6 +63,10 @@ namespace Services
         public void UpdateOneProduct(ProductDtoForUpdate productDto)
         {
             var entity = _mapper.Map<Product>(productDto);
+            if (entity is null)
+            {
+                throw new Exception("User not found");
+            }
             _manager.Product.UpdateOneProduct(entity);
             _manager.Save();
         }

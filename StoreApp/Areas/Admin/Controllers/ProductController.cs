@@ -31,10 +31,19 @@ namespace StoreApp.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([FromForm] ProductDtoForInsertion prdDto)
+        public async Task<IActionResult> Create([FromForm] ProductDtoForInsertion prdDto, IFormFile file)
         {
             if (ModelState.IsValid)
             {
+                //file operation
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", file.FileName);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                prdDto.ImageUrl = String.Concat("/images/", file.FileName);
                 _manager.ProductService.CreateProduct(prdDto);
                 return RedirectToAction("Index");
             }
@@ -48,12 +57,18 @@ namespace StoreApp.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update([FromForm]ProductDtoForUpdate prd)
+        public async Task<IActionResult> Update([FromForm] ProductDtoForUpdate prdDto,IFormFile file)
         {
             if (ModelState.IsValid)
             {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", file.FileName);
 
-                _manager.ProductService.UpdateOneProduct(prd);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                prdDto.ImageUrl = String.Concat("/images/", file.FileName);
+                _manager.ProductService.UpdateOneProduct(prdDto);
                 return RedirectToAction("Index");
             }
             return View();
