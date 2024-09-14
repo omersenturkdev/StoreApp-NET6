@@ -4,10 +4,14 @@ using Repositories.Contracts;
 using Services.Contracts;
 using Services;
 using System.Net;
+using Entities.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
 builder.Services.AddDbContext<RepositoryContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("sqlconnection"),
@@ -21,6 +25,8 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IServiceManager, ServiceManager>();
 builder.Services.AddScoped<IProductService, ProductManager>();
 builder.Services.AddScoped<ICategoryService, CategoryManager>();
+
+builder.Services.AddSingleton<Cart>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
@@ -41,6 +47,7 @@ app.UseEndpoints(endpoints =>
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}"
     );
+    endpoints.MapRazorPages();
 });
 
 
