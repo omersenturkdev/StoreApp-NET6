@@ -17,7 +17,7 @@ namespace StoreApp.Pages
         }
         
         public string ReturnUrl { get; set; } = "/";
-        public void OnGet(string returnURl)
+        public void OnGet(string returnUrl)
         {
             ReturnUrl = ReturnUrl ?? "/";
         }
